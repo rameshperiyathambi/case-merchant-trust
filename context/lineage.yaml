@@ -1,0 +1,22 @@
+# Synthetic service lineage and supersession records (expert-reviewed lookup).
+implementations:
+  rest-trust-score:
+    requiresFlag: trust-score.rest.enabled
+  graphql-trust-score:
+    requiresFlag: trust-score.graphql.enabled
+  guarded-fallback:
+    requiresFlag: trust-score.rest-fallback.enabled
+  experimental-signal:
+    requiresFlag: trust-score.experimental-signal.enabled
+
+supersessions:
+  - implementation: rest-trust-score
+    supersededBy: graphql-trust-score
+    source: history/adr/ADR-007-graphql.md
+    deployments:
+      us-prod:
+        effectiveAt: "2026-01-15T00:00:00Z"
+      eu-prod:
+        effectiveAt: "2026-01-20T00:00:00Z"
+        revertedAt: "2026-04-02T00:00:00Z"
+        revertSource: history/prs/PR-231-eu-rollback.md

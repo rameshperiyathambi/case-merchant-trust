@@ -1,0 +1,7 @@
+id: t1-mig-us-new-signal
+stratum: migration
+task: "Extend the merchant trust score with a new return rate signal"
+deployment: us-prod
+asOf: "2026-06-01T00:00:00Z"
+oracle: us-prod
+replayDeployment: eu-prod

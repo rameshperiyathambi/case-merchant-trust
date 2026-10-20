@@ -1,0 +1,1 @@
+task,deployment,condition,agent_model,run_id,architecture_choice,operational_compatibility_violation,affected_services_correct,flag_deployment_compatible,justification_score_1to5,tests_recommended,tokens_in,tokens_out,latency_s,evaluator,notes

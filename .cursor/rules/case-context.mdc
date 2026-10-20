@@ -1,0 +1,9 @@
+---
+description: Use operational-validity context before changing merchant-service
+alwaysApply: true
+---
+
+Before editing `merchant-service`, follow `AGENTS.md`: generate `AGENT_CONTEXT.md` with
+`scripts/case-context.sh "<task>" <deployment> [as-of]`, act only on its ACT ON section, treat EXPLAIN as history,
+and ask the user about anything under VERIFY. The repo holds both REST and GraphQL trust-score paths; the feature
+flags for the target deployment decide which is live.

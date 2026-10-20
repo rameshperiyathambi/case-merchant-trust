@@ -1,0 +1,4 @@
+# Expert-reviewed labels for us-prod at 2026-06-01 (withheld from every strategy).
+applicable: [code-graphql-resolver, code-aggregator, test-graphql, pr-214-graphql, code-router, code-merchant-repo, test-merchant-repo]
+incompatible: [code-rest-controller, code-rest-service, test-rest, pr-101-rest, pr-245-experimental, code-fallback]
+unknown: []

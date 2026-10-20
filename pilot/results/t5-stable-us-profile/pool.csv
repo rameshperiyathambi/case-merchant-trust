@@ -1,0 +1,9 @@
+rank,artifact_id,relevance,annotatorA,annotatorB
+1,test-merchant-repo,8.817,,
+2,code-merchant-repo,8.510,,
+3,code-aggregator,5.221,,
+4,pr-101-rest,4.681,,
+5,code-graphql-resolver,4.612,,
+6,test-graphql,3.785,,
+7,code-rest-service,3.221,,
+8,code-rest-controller,3.153,,

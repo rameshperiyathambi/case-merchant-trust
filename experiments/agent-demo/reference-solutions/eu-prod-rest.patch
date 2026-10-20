@@ -1,0 +1,42 @@
+diff --git a/merchant-service/src/main/java/dev/caseresearch/merchant/rest/LegacyTrustScore.java b/merchant-service/src/main/java/dev/caseresearch/merchant/rest/LegacyTrustScore.java
+index efd6f44..bfb80f9 100644
+--- a/merchant-service/src/main/java/dev/caseresearch/merchant/rest/LegacyTrustScore.java
++++ b/merchant-service/src/main/java/dev/caseresearch/merchant/rest/LegacyTrustScore.java
+@@ -1,4 +1,4 @@
+ package dev.caseresearch.merchant.rest;
+ 
+-public record LegacyTrustScore(String merchantId, int score, double onTimeRate, double disputeRate) {
++public record LegacyTrustScore(String merchantId, int score, double onTimeRate, double disputeRate, double returnRate) {
+ }
+diff --git a/merchant-service/src/main/java/dev/caseresearch/merchant/rest/LegacyTrustScoreService.java b/merchant-service/src/main/java/dev/caseresearch/merchant/rest/LegacyTrustScoreService.java
+index 43934e7..a243dac 100644
+--- a/merchant-service/src/main/java/dev/caseresearch/merchant/rest/LegacyTrustScoreService.java
++++ b/merchant-service/src/main/java/dev/caseresearch/merchant/rest/LegacyTrustScoreService.java
+@@ -12,8 +12,9 @@ import dev.caseresearch.merchant.Merchant;
+ public class LegacyTrustScoreService {
+ 
+     public LegacyTrustScore compute(Merchant m) {
+-        double raw = 100 * (0.7 * m.onTimeShippingRate() + 0.3 * (1.0 - m.disputeRate() * 10));
++        double raw = 100 * (0.6 * m.onTimeShippingRate() + 0.25 * (1.0 - m.disputeRate() * 10)
++                + 0.15 * (1.0 - m.returnRate() * 5));
+         int score = (int) Math.max(0, Math.min(100, Math.round(raw)));
+-        return new LegacyTrustScore(m.id(), score, m.onTimeShippingRate(), m.disputeRate());
++        return new LegacyTrustScore(m.id(), score, m.onTimeShippingRate(), m.disputeRate(), m.returnRate());
+     }
+ }
+diff --git a/merchant-service/src/test/java/dev/caseresearch/merchant/LegacyTrustScoreServiceTest.java b/merchant-service/src/test/java/dev/caseresearch/merchant/LegacyTrustScoreServiceTest.java
+index 020b640..2b9ca26 100644
+--- a/merchant-service/src/test/java/dev/caseresearch/merchant/LegacyTrustScoreServiceTest.java
++++ b/merchant-service/src/test/java/dev/caseresearch/merchant/LegacyTrustScoreServiceTest.java
+@@ -22,4 +22,11 @@ class LegacyTrustScoreServiceTest {
+         var bad = service.compute(new Merchant("x", "X", "US", 0.9, 0.08, 1.0, 0.0));
+         assertThat(bad.score()).isLessThan(good.score());
+     }
++
++    @Test
++    void highReturnRateLowersScore() {
++        var good = service.compute(new Merchant("x", "X", "US", 0.9, 0.0, 1.0, 0.0));
++        var bad = service.compute(new Merchant("x", "X", "US", 0.9, 0.0, 1.0, 0.15));
++        assertThat(bad.score()).isLessThan(good.score());
++    }
+ }

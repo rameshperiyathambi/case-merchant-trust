@@ -1,0 +1,58 @@
+diff --git a/merchant-service/src/main/java/dev/caseresearch/merchant/graphql/Signals.java b/merchant-service/src/main/java/dev/caseresearch/merchant/graphql/Signals.java
+index 72aece3..f23acb2 100644
+--- a/merchant-service/src/main/java/dev/caseresearch/merchant/graphql/Signals.java
++++ b/merchant-service/src/main/java/dev/caseresearch/merchant/graphql/Signals.java
+@@ -26,6 +26,11 @@ public class Signals {
+         return provider("response-time", 0.2, m -> Math.max(0, 1.0 - m.avgResponseHours() / 48.0));
+     }
+ 
++    @Bean
++    TrustSignalProvider returnRate() {
++        return provider("return-rate", 0.15, m -> Math.max(0, 1.0 - m.returnRate() * 5));
++    }
++
+     private static TrustSignalProvider provider(String name, double weight, ToDoubleFunction<Merchant> value) {
+         return new TrustSignalProvider() {
+             public String name() { return name; }
+diff --git a/merchant-service/src/test/java/dev/caseresearch/merchant/UsProdRoutingTest.java b/merchant-service/src/test/java/dev/caseresearch/merchant/UsProdRoutingTest.java
+index 3f6d1a7..d7b8602 100644
+--- a/merchant-service/src/test/java/dev/caseresearch/merchant/UsProdRoutingTest.java
++++ b/merchant-service/src/test/java/dev/caseresearch/merchant/UsProdRoutingTest.java
+@@ -30,6 +30,6 @@ class UsProdRoutingTest {
+         mvc.perform(post("/graphql").contentType(MediaType.APPLICATION_JSON)
+                         .content("{\"query\":\"{ merchant(id: \\\"m-1001\\\") { trustScore { score signals { name } } } }\"}"))
+                 .andExpect(status().isOk())
+-                .andExpect(jsonPath("$.data.merchant.trustScore.signals.length()").value(3));
++                .andExpect(jsonPath("$.data.merchant.trustScore.signals.length()").value(4));
+     }
+ }
+diff --git a/merchant-service/src/test/java/dev/caseresearch/merchant/graphql/ReturnRateSignalTest.java b/merchant-service/src/test/java/dev/caseresearch/merchant/graphql/ReturnRateSignalTest.java
+new file mode 100644
+index 0000000..377c411
+--- /dev/null
++++ b/merchant-service/src/test/java/dev/caseresearch/merchant/graphql/ReturnRateSignalTest.java
+@@ -0,0 +1,24 @@
++package dev.caseresearch.merchant.graphql;
++
++import static org.assertj.core.api.Assertions.assertThat;
++
++import org.junit.jupiter.api.Test;
++
++import dev.caseresearch.merchant.Merchant;
++
++class ReturnRateSignalTest {
++
++    private final TrustSignalProvider signal = new Signals().returnRate();
++
++    @Test
++    void lowReturnRateScoresHigher() {
++        var low = signal.value(new Merchant("a", "A", "US", 1, 0, 1, 0.01));
++        var high = signal.value(new Merchant("b", "B", "US", 1, 0, 1, 0.15));
++        assertThat(low).isGreaterThan(high);
++    }
++
++    @Test
++    void valueIsNormalised() {
++        assertThat(signal.value(new Merchant("c", "C", "US", 1, 0, 1, 0.9))).isBetween(0.0, 1.0);
++    }
++}

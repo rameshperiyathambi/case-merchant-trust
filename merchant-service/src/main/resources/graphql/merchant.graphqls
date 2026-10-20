@@ -1,0 +1,21 @@
+type Query {
+    merchant(id: ID!): Merchant
+}
+
+type Merchant {
+    id: ID!
+    name: String!
+    region: String!
+    trustScore: TrustScore!
+}
+
+type TrustScore {
+    score: Float!
+    signals: [TrustSignal!]!
+}
+
+type TrustSignal {
+    name: String!
+    weight: Float!
+    value: Float!
+}

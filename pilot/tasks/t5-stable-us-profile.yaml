@@ -1,0 +1,6 @@
+id: t5-stable-us-profile
+stratum: stable
+task: "Add lookup by name to the merchant profile repository"
+deployment: us-prod
+asOf: "2026-06-01T00:00:00Z"
+oracle: us-prod

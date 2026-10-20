@@ -1,0 +1,17 @@
+# Synthetic flag export. All data is fictional.
+deployment: us-prod
+effectiveAt: "2025-09-01T00:00:00Z"
+authority: AUTHORITATIVE
+flags:
+  trust-score.graphql.enabled:
+    enabled: false
+    scope: ALL
+  trust-score.rest.enabled:
+    enabled: true
+    scope: ALL
+  trust-score.rest-fallback.enabled:
+    enabled: false
+    scope: ALL
+  trust-score.experimental-signal.enabled:
+    enabled: false
+    scope: ALL

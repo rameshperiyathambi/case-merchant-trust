@@ -1,0 +1,7 @@
+id: t3-flag-eu-after-rollback
+stratum: flag-region
+task: "Extend the merchant trust score with a new return rate signal"
+deployment: eu-prod
+asOf: "2026-06-01T00:00:00Z"
+oracle: eu-prod-after-rollback
+replayDeployment: us-prod

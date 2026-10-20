@@ -1,0 +1,6 @@
+id: t6-stable-apac-profile
+stratum: stable
+task: "Add lookup by region to the merchant profile repository"
+deployment: apac-prod
+asOf: "2026-06-01T00:00:00Z"
+oracle: apac-prod

@@ -1,0 +1,131 @@
+# Synthetic artifact catalog: what an agent could retrieve. 'implementation' links an artifact to a
+# runtime path in context/lineage.yaml; 'none' means expert-reviewed as deployment-independent.
+artifacts:
+  - id: code-rest-controller
+    type: CODE
+    role: PRESCRIPTIVE
+    implementation: rest-trust-score
+    updatedAt: "2024-11-10T00:00:00Z"
+    path: merchant-service/src/main/java/dev/caseresearch/merchant/rest/LegacyTrustScoreController.java
+    title: Legacy REST trust-score controller
+    summary: REST endpoint GET /api/v1/merchants/id/trust-score; extend trust score signal by changing LegacyTrustScoreService formula.
+  - id: code-rest-service
+    type: CODE
+    role: PRESCRIPTIVE
+    implementation: rest-trust-score
+    updatedAt: "2024-11-10T00:00:00Z"
+    path: merchant-service/src/main/java/dev/caseresearch/merchant/rest/LegacyTrustScoreService.java
+    title: Legacy trust score formula service
+    summary: Fixed weighted formula for the trust score from on-time shipping and dispute rate; add a new signal here.
+  - id: test-rest
+    type: TEST
+    role: PRESCRIPTIVE
+    implementation: rest-trust-score
+    updatedAt: "2024-11-10T00:00:00Z"
+    path: merchant-service/src/test/java/dev/caseresearch/merchant/LegacyTrustScoreServiceTest.java
+    title: Legacy trust score formula tests
+    summary: Tests for the REST trust score formula and signal boundaries.
+  - id: pr-101-rest
+    type: PR
+    role: PRESCRIPTIVE
+    implementation: rest-trust-score
+    updatedAt: "2024-11-10T00:00:00Z"
+    path: history/prs/PR-101-rest-trust-score.md
+    title: PR-101 REST trust-score endpoint
+    summary: How the REST trust score endpoint was built and how to add a new trust signal to it.
+  - id: code-graphql-resolver
+    type: CODE
+    role: PRESCRIPTIVE
+    implementation: graphql-trust-score
+    updatedAt: "2026-01-10T00:00:00Z"
+    path: merchant-service/src/main/java/dev/caseresearch/merchant/graphql/MerchantTrustResolver.java
+    title: GraphQL merchant trust resolver
+    summary: GraphQL resolver exposing merchant trust score and signals.
+  - id: code-aggregator
+    type: CODE
+    role: PRESCRIPTIVE
+    implementation: graphql-trust-score
+    updatedAt: "2026-01-10T00:00:00Z"
+    path: merchant-service/src/main/java/dev/caseresearch/merchant/graphql/TrustSignalAggregator.java
+    title: Trust signal aggregator and provider extension point
+    summary: Add a new trust signal by registering a TrustSignalProvider bean; aggregator computes the weighted trust score.
+  - id: test-graphql
+    type: TEST
+    role: PRESCRIPTIVE
+    implementation: graphql-trust-score
+    updatedAt: "2026-01-10T00:00:00Z"
+    path: merchant-service/src/test/java/dev/caseresearch/merchant/TrustSignalAggregatorTest.java
+    title: Trust signal aggregator tests
+    summary: Tests showing how a new trust signal plugs into the GraphQL aggregator.
+  - id: pr-214-graphql
+    type: PR
+    role: PRESCRIPTIVE
+    implementation: graphql-trust-score
+    updatedAt: "2026-01-12T00:00:00Z"
+    path: history/prs/PR-214-graphql-migration.md
+    title: PR-214 GraphQL trust score with pluggable signals
+    summary: GraphQL migration of the trust score; new trust signal is a new provider bean behind a flag.
+  - id: code-fallback
+    type: CODE
+    role: PRESCRIPTIVE
+    implementation: guarded-fallback
+    updatedAt: "2026-02-01T00:00:00Z"
+    path: merchant-service/src/main/java/dev/caseresearch/merchant/GuardedRestFallback.java
+    title: Guarded REST fallback for trust score
+    summary: Cohort guarded fallback to legacy REST trust score, only where its flag is on.
+  - id: code-router
+    type: CODE
+    role: PRESCRIPTIVE
+    implementation: none
+    updatedAt: "2026-02-01T00:00:00Z"
+    path: merchant-service/src/main/java/dev/caseresearch/merchant/TrustScoreRouter.java
+    title: Trust score router (flag-driven)
+    summary: Routes trust score requests to GraphQL, REST or fallback depending on feature flags for the deployment.
+  - id: pr-231-eu-rollback
+    type: PR
+    role: EXPLANATORY
+    implementation: none
+    updatedAt: "2026-04-02T00:00:00Z"
+    path: history/prs/PR-231-eu-rollback.md
+    title: PR-231 EU rollback to REST trust score
+    summary: Why eu-prod rolled back from GraphQL to REST for the trust score.
+  - id: pr-245-experimental
+    type: PR
+    role: PRESCRIPTIVE
+    implementation: experimental-signal
+    updatedAt: "2026-05-20T00:00:00Z"
+    path: history/prs/PR-245-experimental-signal.md
+    title: PR-245 experimental return-rate trust signal
+    summary: Most recent trust signal PR, a new trust signal behind an experiment flag.
+  - id: adr-007
+    type: ADR
+    role: EXPLANATORY
+    implementation: none
+    updatedAt: "2025-12-01T00:00:00Z"
+    path: history/adr/ADR-007-graphql.md
+    title: ADR-007 REST to GraphQL decision
+    summary: Decision record to move merchant read APIs including trust score from REST to GraphQL per deployment.
+  - id: migration-note
+    type: MIGRATION_NOTE
+    role: EXPLANATORY
+    implementation: none
+    updatedAt: "2025-12-15T00:00:00Z"
+    path: history/migration-note-rest-to-graphql.md
+    title: REST to GraphQL migration note
+    summary: Migration order and guidance for teams extending the trust score; check flags first.
+  - id: code-merchant-repo
+    type: CODE
+    role: PRESCRIPTIVE
+    implementation: none
+    updatedAt: "2025-03-01T00:00:00Z"
+    path: merchant-service/src/main/java/dev/caseresearch/merchant/MerchantRepository.java
+    title: Merchant repository (stable)
+    summary: Stable in-memory merchant profile repository for merchant lookup and profile fields; same in every deployment.
+  - id: test-merchant-repo
+    type: TEST
+    role: PRESCRIPTIVE
+    implementation: none
+    updatedAt: "2025-03-01T00:00:00Z"
+    path: merchant-service/src/test/java/dev/caseresearch/merchant/MerchantRepositoryTest.java
+    title: Merchant repository tests (stable)
+    summary: Tests for merchant lookup and profile repository.

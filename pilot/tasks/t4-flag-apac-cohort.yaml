@@ -1,0 +1,6 @@
+id: t4-flag-apac-cohort
+stratum: flag-region
+task: "Add a new signal to the merchant trust score"
+deployment: apac-prod
+asOf: "2026-06-01T00:00:00Z"
+oracle: apac-prod

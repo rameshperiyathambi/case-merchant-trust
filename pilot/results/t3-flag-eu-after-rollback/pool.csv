@@ -1,0 +1,9 @@
+rank,artifact_id,relevance,annotatorA,annotatorB
+1,pr-214-graphql,6.836,,
+2,pr-101-rest,6.393,,
+3,pr-245-experimental,6.317,,
+4,code-rest-service,5.906,,
+5,test-graphql,4.287,,
+6,test-rest,4.151,,
+7,code-aggregator,3.890,,
+8,code-rest-controller,3.800,,

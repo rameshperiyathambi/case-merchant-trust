@@ -1,0 +1,6 @@
+id: t2-mig-eu-before-rollback
+stratum: migration
+task: "Add a new weighted signal to the merchant trust score"
+deployment: eu-prod
+asOf: "2026-03-01T00:00:00Z"
+oracle: eu-prod-before-rollback

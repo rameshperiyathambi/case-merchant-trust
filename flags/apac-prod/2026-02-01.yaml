@@ -1,0 +1,21 @@
+# Synthetic flag export. All data is fictional.
+deployment: apac-prod
+effectiveAt: "2026-02-01T00:00:00Z"
+authority: AUTHORITATIVE
+flags:
+  trust-score.graphql.enabled:
+    enabled: true
+    scope: COHORT
+    cohorts: [beta-merchants]
+    assignmentVerified: false
+  trust-score.rest.enabled:
+    enabled: true
+    scope: ALL
+  trust-score.rest-fallback.enabled:
+    enabled: true
+    scope: COHORT
+    cohorts: [beta-merchants]
+    assignmentVerified: false
+  trust-score.experimental-signal.enabled:
+    enabled: false
+    scope: ALL
