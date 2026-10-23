@@ -62,6 +62,7 @@ The package has three sections: ACT ON (valid prescriptive artifacts), VERIFY (u
 
 | Document | Read it for |
 |---|---|
+| [`docs/paper-guide.md`](docs/paper-guide.md) | Start here: how the repository supports each part of the paper, in layers |
 | [`docs/walkthrough.md`](docs/walkthrough.md) | The paper's failure mode, step by step, with real package output and the history timeline |
 | [`docs/architecture.md`](docs/architecture.md) | Modules, packages and the paper-to-code map |
 | [`docs/metrics.md`](docs/metrics.md) | Exact definitions of every pilot metric |
